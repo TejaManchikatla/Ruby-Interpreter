@@ -15,7 +15,7 @@ def token(a):
     tokens=[]
     #if nothing is in the string return error
     if a[0]=='':
-        return "errorrrr"
+        return "error"
     for j in a:
         #a counter j which will iterate through the string and find the respective tokens
         if j in keywords:
@@ -100,7 +100,7 @@ def token(a):
                     return "error"
     return tokens
 #test case
-print(token("a+b")) 
+print(token("a+b-c*d/e")) 
 
     
     
