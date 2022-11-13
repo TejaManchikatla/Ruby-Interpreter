@@ -1,5 +1,5 @@
 #This is a token generator function aka lexer, scanner, tokenizer...
-from boolean import booleanExpression
+
 def token(a):
     #Below are all the keyword in ruby language
     keywords=["print","puts","new","require","break","begin","end","alias","gets","strip","if","else","unless","for","in","while","class","def","define","do","nil",
@@ -140,11 +140,10 @@ def token(a):
                     print("error")
                     return "error"
 
-    teja = booleanExpression(tokens, 0)
-    print(teja.evaluate())
+
     return tokens        
 
 
 
 #testing
-print(token("3+4>=3+5"))
+print(token(""))

@@ -33,8 +33,7 @@ def puts(tokens, i):
             result = interpreter.expr()
             print(result)
 
-            
-        
+                   
     else:
         print(bad_shit())
  

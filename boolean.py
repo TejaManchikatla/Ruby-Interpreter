@@ -1,4 +1,5 @@
 from RUBY import *
+from Memory import *
 
 class booleanExpression:
     
@@ -38,11 +39,18 @@ class booleanExpression:
                 i+=2
                 break
             else:
-                left+=tokens[i]
+                if(tokens[i+1]=='VARIABLE'):
+                    left+=str(mem_val[mem_var.index(tokens[i])])
+                else:
+                    left+=tokens[i]
                 i+=2
         right=''
-        while i<len(tokens):
-            right+=tokens[i]
+        while i<len(tokens) and tokens[i+1]!='THEN':
+            if(tokens[i+1]=='VARIABLE'):
+                right+=str(mem_val[mem_var.index(tokens[i])])
+            else:
+                right+=tokens[i]
+
             i+=2
             
         lexer1=Lexer(left)
@@ -62,5 +70,4 @@ class booleanExpression:
         elif op=='<':
             return leftresult<rightresult
         elif op=='<=':
-            print(leftresult, rightresult)
             return leftresult<=rightresult
