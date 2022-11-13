@@ -1,6 +1,5 @@
 #This is a token generator function aka lexer, scanner, tokenizer...
-
-
+from boolean import booleanExpression
 def token(a):
     #Below are all the keyword in ruby language
     keywords=["print","puts","new","require","break","begin","end","alias","gets","strip","if","else","unless","for","in","while","class","def","define","do","nil",
@@ -11,6 +10,7 @@ def token(a):
     operators=["+","-","/","%","<",">","*",".","!",":","&","(",")","{","}","[","]","-","?","#","="]
     #different types of brackets
     op=["(",")","{","}","[","]"]
+    quotation = ["\"", "\'"]
     #different types of seperators
     seprator=[",","#",";"]
     #split the line by whitespaces
@@ -23,7 +23,7 @@ def token(a):
         if j in keywords:
             #print(j,"->keyword")
             tokens.append(j)
-            tokens.append("keywords")
+            tokens.append(j.upper())
 
         elif j in methods:
             #print(j,"->methods")
@@ -40,6 +40,11 @@ def token(a):
             tokens.append(j)
             tokens.append("seperator")
 
+        elif j in quotation:
+            #print(j,"quotation")
+            tokens.append(j)
+            tokens.append("QUOTATION")
+
         else:
             n=len(j)
             s=j
@@ -48,32 +53,48 @@ def token(a):
             while i<n:
                 variable=''
 
+    
+
                 if s[i].isalpha() or s[i].isdigit() or s[i]=="_" or s[i]=="'" or s[i]=='"':
 
-                    while s[i].isalpha() or s[i].isdigit() or s[i]=="_" or s[i]=="'" or s[i]=='"':
+                    if s[i] in quotation:
+
+                        tokens.append(s[i])
+                        tokens.append("QUOTATION")
+                        i+=1
+                        continue
+
+                    while s[i].isalpha() or s[i].isdigit() or s[i]=="_":
                         variable+=s[i]
                         i=i+1
-                        
 
                         if i==n:
                             break
 
+                    # if(tokens[i]=='QUOTATION'):
+                    #     tokens.append(variable)
+                    #     tokens.append('STATEMENT')
+                    #     continue
+
                     if variable in keywords:         
                         #print(variable,"->keywords")
                         tokens.append(variable)
-                        tokens.append("Identifier")
+                        tokens.append(variable.upper())
                         continue
 
                     elif variable in methods:
                         #print(variable,"->methods")
                         tokens.append(variable)
-                        tokens.append("Identifier")
+                        tokens.append(variable.upper())
                         continue
 
                     else:
                         #print(variable,"->identifiers")
                         tokens.append(variable)
-                        tokens.append("Identifier")
+                        if(variable.isdigit()):
+                            tokens.append("INTEGER")
+                        else:
+                            tokens.append("VARIABLE")
                         continue
 
                 elif s[i] in operators:
@@ -113,10 +134,17 @@ def token(a):
                     i+=1
                     continue
 
+
+
                 else:
                     print("error")
                     return "error"
-                    break
-    return tokens
+
+    teja = booleanExpression(tokens, 0)
+    print(teja.evaluate())
+    return tokens        
+
+
+
 #testing
-print(token("puts ab+c/d+v"))
+print(token("3+4>=3+5"))
