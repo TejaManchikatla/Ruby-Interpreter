@@ -23,6 +23,11 @@ class If_stmt(AST):
     def __init__(self, condition, code_block):
         self.condition = condition
         self.code_block = code_block
+
+class While_stmt(AST):
+    def __init__(self, condition, code_block):
+        self.condition = condition
+        self.code_block = code_block
         
 
 class Assign(AST):
@@ -205,6 +210,8 @@ class Parser(object):
             node = self.puts_statement()
         elif self.current_token.type == 'IF':
             node = self.if_statement()
+        elif self.current_token.type == 'WHILE':
+            node = self.while_statement()
         elif self.current_token.type in (EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS):
             node = self.bol_expr()
         else:
@@ -233,6 +240,22 @@ class Parser(object):
             self.eat('END')
         
         node = If_stmt(condition,compound_stmt)
+      
+  
+        return node
+
+    def while_statement(self):
+        """while stat : WHILE bool_expr DO comp_stmt END"""
+        self.eat('WHILE')
+        if(self.current_token.type in [EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS]):
+            condition = self.bol_expr()
+            does = self.current_token
+            self.eat('DO')
+            compound_stmt = self.compound_statement()
+            end = self.current_token
+            self.eat('END')
+        
+        node = While_stmt(condition,compound_stmt)
       
   
         return node
