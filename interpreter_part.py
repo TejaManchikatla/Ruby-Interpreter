@@ -58,11 +58,19 @@ class Interpreter(NodeVisitor):
         if(self.visit(node.condition) == True):
             return self.visit(node.code_block)
 
+    def visit_Unless_stmt(self, node):
+        if(self.visit(node.condition) == False):
+            return self.visit(node.code_block)
+
     def visit_While_stmt(self, node):
-        n = node
         if(self.visit(node.condition) == True):
             self.visit(node.code_block)
-            return self.visit_While_stmt(n)
+            return self.visit_While_stmt(node)
+
+    def visit_Until_stmt(self, node):
+        if(self.visit(node.condition) == False):
+            self.visit(node.code_block)
+            return self.visit_Until_stmt(node)
         
             
     

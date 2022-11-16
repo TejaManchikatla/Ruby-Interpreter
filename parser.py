@@ -24,7 +24,17 @@ class If_stmt(AST):
         self.condition = condition
         self.code_block = code_block
 
+class Unless_stmt(AST):
+    def __init__(self, condition, code_block):
+        self.condition = condition
+        self.code_block = code_block
+
 class While_stmt(AST):
+    def __init__(self, condition, code_block):
+        self.condition = condition
+        self.code_block = code_block
+
+class Until_stmt(AST):
     def __init__(self, condition, code_block):
         self.condition = condition
         self.code_block = code_block
@@ -210,8 +220,12 @@ class Parser(object):
             node = self.puts_statement()
         elif self.current_token.type == 'IF':
             node = self.if_statement()
+        elif self.current_token.type == 'UNLESS':
+            node = self.unless_statement()
         elif self.current_token.type == 'WHILE':
             node = self.while_statement()
+        elif self.current_token.type == 'UNTIL':
+            node = self.until_statement()
         elif self.current_token.type in (EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS):
             node = self.bol_expr()
         else:
@@ -244,6 +258,23 @@ class Parser(object):
   
         return node
 
+
+    def unless_statement(self):
+        """unless stat : UNLESS bool_expr THEN comp_stmt END"""
+        self.eat('UNLESS')
+        if(self.current_token.type in [EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS]):
+            condition = self.bol_expr()
+            then = self.current_token
+            self.eat('THEN')
+            compound_stmt = self.compound_statement()
+            end = self.current_token
+            self.eat('END')
+        
+        node = Unless_stmt(condition,compound_stmt)
+      
+  
+        return node
+
     def while_statement(self):
         """while stat : WHILE bool_expr DO comp_stmt END"""
         self.eat('WHILE')
@@ -259,6 +290,23 @@ class Parser(object):
       
   
         return node
+
+    def until_statement(self):
+        """until stat : UNTIL bool_expr DO comp_stmt END"""
+        self.eat('UNTIL')
+        if(self.current_token.type in [EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS]):
+            condition = self.bol_expr()
+            does = self.current_token
+            self.eat('DO')
+            compound_stmt = self.compound_statement()
+            end = self.current_token
+            self.eat('END')
+        
+        node = Until_stmt(condition,compound_stmt)
+      
+  
+        return node
+
         
     def assignment_statement(self):
         """

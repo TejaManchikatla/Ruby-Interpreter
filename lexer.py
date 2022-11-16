@@ -24,9 +24,10 @@ RESERVED_KEYWORDS = {
         'ELSE': Token('ELSE', 'ELSE'),
         'then' : Token('THEN', 'THEN'),
         'while': Token('WHILE', 'WHILE'),
-        'UNLESS' : Token('UNLESS', 'UNLESS'),
+        'unless' : Token('UNLESS', 'UNLESS'),
         'do': Token('DO', 'DO'),
-        'puts' : Token('PUTS', 'PUTS')
+        'puts' : Token('PUTS', 'PUTS'),
+        'until' : Token('UNTIL', 'UNTIL')
         
     }
 
