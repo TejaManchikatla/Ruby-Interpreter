@@ -21,7 +21,8 @@ class Token(object):
 RESERVED_KEYWORDS = {
         'end': Token('END', 'END'),
         'if' : Token('IF', 'IF'),
-        'ELSE': Token('ELSE', 'ELSE'),
+        'else': Token('ELSE', 'ELSE'),
+        'elsif': Token('ELSIF','ELSIF'),
         'then' : Token('THEN', 'THEN'),
         'while': Token('WHILE', 'WHILE'),
         'unless' : Token('UNLESS', 'UNLESS'),
