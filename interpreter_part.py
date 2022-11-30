@@ -57,6 +57,8 @@ class Interpreter(NodeVisitor):
     def visit_If_stmt(self, node):
         if(self.visit(node.condition) == True):
             return self.visit(node.code_block)
+        else:
+            return self.visit(node.elsecode_block)
 
     def visit_Unless_stmt(self, node):
         if(self.visit(node.condition) == False):
@@ -115,9 +117,11 @@ def main():
         parser = Parser(lexer)
         interpreter = Interpreter(parser)
         result = interpreter.interpret()
-        print(interpreter.GLOBAL_SCOPE)
-        print(result)
 
 
 if __name__ == '__main__':
     main()
+
+
+
+

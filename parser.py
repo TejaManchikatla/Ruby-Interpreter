@@ -20,9 +20,10 @@ class BinOp(AST):
         self.right = right
 
 class If_stmt(AST):
-    def __init__(self, condition, code_block):
+    def __init__(self, condition, code_block , elsecode_block):
         self.condition = condition
         self.code_block = code_block
+        self.elsecode_block = elsecode_block
 
 class Unless_stmt(AST):
     def __init__(self, condition, code_block):
@@ -241,19 +242,26 @@ class Parser(object):
             right = self.expr()
         node = Puts(right)
         return node
-        
+
+
     def if_statement(self):
-        """if stat : IF bool_expr THEN comp_stmt END"""
+        """if stat : IF bool_expr THEN comp_stmt {ELSIF bool_expr THEN comp_stmt}ELSE comp_stmt END"""
         self.eat('IF')
         if(self.current_token.type in [EQUALS, LESSTHAN, GREATERTHAN, NOTEQUALS, LESSTHANEQUALS, GREATERTHANEQUALS]):
             condition = self.bol_expr()
             then = self.current_token
             self.eat('THEN')
             compound_stmt = self.compound_statement()
+            elsecompound_stmt=None
+                
+            if(self.current_token.type == "ELSE"):
+                self.eat('ELSE')
+                elsecompound_stmt = self.compound_statement()
+                    
             end = self.current_token
             self.eat('END')
         
-        node = If_stmt(condition,compound_stmt)
+        node = If_stmt(condition,compound_stmt,elsecompound_stmt)
       
   
         return node
