@@ -53,7 +53,7 @@ The predefined token types present in Lexer file are INTEGER, PLUS, MINUS, MUL, 
 It has a 'Token' class to define the tokens used. And a 'Lexer' class to check and return the token types present in the given string. It has the following functions defined in it.
 
 ### *error*  
-It raises an exception whenever called.
+It raises an exception called "Invalid Character" whenever the function is called.
 
 ### *peek*  
 It returns what character is present next to the pointer but doesn't change the pointers location.
