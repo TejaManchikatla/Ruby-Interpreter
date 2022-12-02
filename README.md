@@ -124,7 +124,7 @@ It parses the string according to the BNF : ' term : factor ((MUL | DIV) factor)
 
 It parses the string according to the BNF :  expr   : ' term ((PLUS | MINUS) term)/* '.It stores the value returned by ***term*** function in node variable and if next token is either 'PLUS' token or 'MINUS' token then returns an object BinOp(left=node, op=token, right=self.term()) else it just return the node variable previously created.
 
-The above three functions are used to parse '+,' '-,' '\*,' and '/' operations on the given variables or Integers according to the precedence /*,/ > +,-.
+The above three functions are used to parse plus,minus,multipy,divide operations on the given variables or Integers according to the precedence multiply,divide greater than +,-.
 
 ***bol_expr*** - 
 
