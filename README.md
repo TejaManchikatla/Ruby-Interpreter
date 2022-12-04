@@ -126,3 +126,86 @@ The above three functions are used to parse plus,minus,multipy,divide operations
 
 ***bol_expr*** - 
 
+# Interpreter
+
+It has different classes to get the abstract syntax tree from parser and analyses it using semantics of ruby language. It imports both [*parser*] (#parser) and [*lexer*] (#lexer).
+
+Different classes used in this are :
+1. Node Visitor : Visits the nodes of abstract syntax tree
+2. Interpreter.
+3. Main.
+## Node Visitor 
+***visit*** -
+
+visits the nodes of the AST and returns its value.
+
+***generic_visit*** - 
+
+raises error message for invalid node entry.
+
+## Class Interpreter 
+
+contains the following functions/methods:
+
+***__init__*** - 
+
+a contructor which creates AST from parse object.
+
+***visit_String*** -
+
+returns node value.
+
+***visit_BinOp*** -
+
+checks for binary operators such as plus, minus, multplication and division.
+Returns the compound value of node.left (bin_op) node.right.
+
+***visit_Boolean_stmt*** -
+
+checks for boolean statements and again returns the final boolean value based on node.left and node.right.
+
+***visit_If_stmt*** -
+
+if the condition is true it returns the codeblock corresponding to if statement, else it will return the codeblock corresponding to else block.
+
+***visit_Unless_stmt*** -
+
+returns the codeblock unless the bool condition becomes false.
+
+***visit_While_stmt*** -
+
+if condition is true visits the codeblock and then returns the while node.
+
+***visit_Until_stmt*** -
+
+if condition is false visits the codeblock and then returns the while node.
+
+***visit_Num*** -
+
+returs the numerical value of the node.
+
+***visit_Puts*** -
+
+activates when puts keyword is encountered. It will print the statement/value after it.
+
+***interpret*** -
+interprest the AST and returns the fial output.
+
+## main 
+Takes input from ruby file. Which then form the part of the following code,
+```
+lexer = Lexer(text)
+parser = Parser(lexer)
+interpreter = Interpreter(parser)
+result = interpreter.interpret()
+```
+
+# Contributors - 
+1. ANDALURI S P V M ADITYA - CS21B002
+2. A SHREE BALAJI- CS21B008
+3. CHETAN MOTURI- CS21B017
+4. K E NANDA KISHORE- CS21B025
+5. TEJA MANCHIKATLA- CS21B031.
+
+THANK YOU!!!
+
